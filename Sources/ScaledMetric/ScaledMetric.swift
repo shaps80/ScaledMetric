@@ -1,14 +1,8 @@
 import SwiftUI
 
-#if swift(>=14)
-public typealias ScaledMetric = SwiftUI.ScaledMetric
-#else
-public typealias ScaledMetric = ScaledMetricCompat
-#endif
-
 /// A dynamic property that scales a numeric value.
 @propertyWrapper
-public struct ScaledMetricCompat<Value>: DynamicProperty where Value: BinaryFloatingPoint {
+public struct ScaledMetric<Value>: DynamicProperty where Value: BinaryFloatingPoint {
 
     @Environment(\.horizontalSizeClass) var horizontalSizeClass
     @Environment(\.verticalSizeClass) var verticalSizeClass
@@ -26,10 +20,6 @@ public struct ScaledMetricCompat<Value>: DynamicProperty where Value: BinaryFloa
 
         return Value(metrics.scaledValue(for: CGFloat(baseValue), compatibleWith: traits))
     }
-
-}
-
-extension ScaledMetricCompat {
 
     /// Creates the scaled metric with an unscaled value using the default scaling.
     public init(baseValue: Value, metrics: UIFontMetrics) {
